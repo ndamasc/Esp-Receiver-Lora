@@ -54,6 +54,6 @@ void loop() {
         }
     } 
   else{
-    pacotesRecebidos=1;
+    pacotesRecebidos = 1;
   }
 }
