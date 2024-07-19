@@ -18,8 +18,7 @@ FirebaseConfig config;
 FirebaseJson json;
 String uid, databasePath, parentPath;
 String tempAguaPath = "/tempAgua";
-//String turbPath = "/turb";
-//String phPath = "/ph";
+String phPath = "/ph";
 String timePath = "/timestamp";
 String rssiPath = "/rssi";
 String packlossPath = "/packloss";
@@ -78,8 +77,7 @@ void send_data() {
 
         // Supondo que as variáveis abaixo sejam globais ou definidas em outro lugar acessível
         json.set(tempAguaPath.c_str(), temperature);
-        //json.set(phPath.c_str(), valor_ph);
-        //json.set(turbPath.c_str(), turbidez);
+        json.set(phPath.c_str(), valor_ph);
         json.set(rssiPath.c_str(), rssi);
         json.set(packlossPath.c_str(), perdas);
         json.set(snrPath.c_str(), snr);
