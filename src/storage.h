@@ -8,13 +8,15 @@ void initSPIFFS() {
   }
 }
 
-void salvarDadosLocalmente(String temperature) {
+void salvarDadosLocalmente(String temperature, String valor_ph) {
     File file = SPIFFS.open("/dados.txt", FILE_APPEND);
     if (!file) {
         Serial.println("Falha ao abrir arquivo para escrita");
         return;
     }
     file.print(temperature);
+    file.close();
+    file.print(valor_ph);
     file.close();
 }
 
@@ -29,7 +31,7 @@ void reenviarDados() {
         String linha = file.readStringUntil('\n');
         linha.trim(); // Remove espaços em branco extras
 
-        if (Firebase.RTDB.pushString(&fbdo, "/Users/10", linha)) {
+        if (Firebase.RTDB.pushString(&fbdo, "/Users/4", linha)) {
             Serial.println("Dados reenviados com sucesso!");
         } else {
             Serial.println("Falha ao reenviar dados. Tentará novamente na próxima vez.");

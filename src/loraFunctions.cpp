@@ -26,10 +26,10 @@ void getLoRaData() {
         String LoRaData = LoRa.readString();
         Serial.print(LoRaData);
         int pos1 = LoRaData.indexOf('/');
-        //int pos2 = LoRaData.indexOf('&');
-        //int pos3 = LoRaData.indexOf('#');
+        int pos2 = LoRaData.indexOf('&');
         readingID = LoRaData.substring(0, pos1).toInt();
-        temperature = LoRaData.substring(pos1 + 1, LoRaData.length());
+        temperature = LoRaData.substring(pos1 + 1, pos2);
+        valor_ph = LoRaData.substring(pos2 + 1, LoRaData.length());
         
     }
 

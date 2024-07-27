@@ -12,6 +12,7 @@ String loRaMessage;
 String temperature;
 String valor_ph;
 
+const int led = 2;
 
 int readingID;
 int pacote; 
@@ -26,10 +27,13 @@ void print_values() {
     Serial.println(pacotesRecebidos);
     Serial.print("temp agua: ");
     Serial.println(temperature);
+    Serial.print("ph: ");
+    Serial.println(valor_ph);
 }
 
 void setup() {
     Serial.begin(115200);
+    pinMode(led, OUTPUT);
     initWiFi();
     initFirebase();
     initSPIFFS();
@@ -37,23 +41,28 @@ void setup() {
 }
 
 void loop() {
-    if(readingID<101){
-        int packetSize = LoRa.parsePacket();
-        if (packetSize) {
-            pacotesRecebidos++;
-            getLoRaData();
-            send_data();
-            if (!Firebase.RTDB.setJSON(&fbdo, parentPath.c_str(), &json)) {
-                Serial.println("Falha ao enviar dados. Salvando localmente...");
-                salvarDadosLocalmente(temperature);
-                lerDadosLocais();
-                delay(5000);
-                reenviarDados();
-            }
-            print_values();
+
+    int packetSize = LoRa.parsePacket();
+    if (packetSize) {
+        pacotesRecebidos++;
+        getLoRaData();
+        send_data();
+        if (!Firebase.RTDB.setJSON(&fbdo, parentPath.c_str(), &json)) {
+            Serial.println("Falha ao enviar dados. Salvando localmente...");
+            salvarDadosLocalmente(temperature, valor_ph);
+            lerDadosLocais();
+            delay(5000);
+            reenviarDados();
+            
         }
-    } 
-  else{
-    pacotesRecebidos = 1;
+        print_values();
+        digitalWrite(led, HIGH);
+        delay(2000);
+        digitalWrite(led, LOW);
+        }
+    if(readingID==100){
+        pacotesRecebidos = 1;
+    }
+
   }
-}
+

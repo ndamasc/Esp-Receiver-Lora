@@ -5,8 +5,8 @@
 
 // Declaração e implementação da função de conexão ao WiFi
 void initWiFi() {
-  const char* ssid = "Star Link";       // Nome da rede WiFi
-  const char* password = "Visitantes@1234567";  // Senha da rede WiFi
+  const char* ssid = "S23 FE de Nathalia";       // Nome da rede WiFi      S23 FE de Nathalia     |  Star Link
+  const char* password = "nathalia123";  // Senha da rede WiFi     nathalia123    | Visitantes@1234567
 
   WiFi.begin(ssid, password);  // Inicia a conexão WiFi
   Serial.print("Conectando ao WiFi");
